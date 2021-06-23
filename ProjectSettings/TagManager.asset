@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - Ground
+  - Enemy
+  - Hit
+  - PatrolZone
+  - Trap
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - Background
+  - Scenario
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Background
+    uniqueID: 2150224371
+    locked: 0
+  - name: Middleground
+    uniqueID: 2680947623
+    locked: 0
+  - name: Foreground
+    uniqueID: 1330031339
+    locked: 0
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: Mainground
+    uniqueID: 2978814985
+    locked: 0
