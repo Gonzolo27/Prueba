@@ -23,6 +23,8 @@ public class PlayerManager : MonoBehaviour
     public float timeHitEnemy = 0.0f;
     public bool hitEnemy = false;
 
+    [SerializeField] private int lifes;
+    private Vector3 InitialPosition;
 
     private void Start()
     {
@@ -45,6 +47,15 @@ public class PlayerManager : MonoBehaviour
     {
         _rigidbody2D.AddForce(force, ForceMode2D.Impulse);
     }
+
+   /* public void RestLife()
+    {
+        lifes -= 1;
+        if (lifes == 0)
+        {
+            Debug.Log("Fin de la partida");
+        }
+    }*/
 
     private void Update()
     {

@@ -67,14 +67,17 @@
     <Compile Include="Assets\Scripts\Managers\ItemManager.cs" />
     <Compile Include="Assets\Scripts\PlayerController.cs" />
     <Compile Include="Assets\Scripts\ChangeDirection.cs" />
+    <Compile Include="Assets\Scripts\MainMenu.cs" />
     <Compile Include="Assets\Scripts\Managers\KillEnemyManager.cs" />
+    <Compile Include="Assets\Scripts\OnMouseOverStart.cs" />
     <Compile Include="Assets\Scripts\Managers\HealthManager.cs" />
     <Compile Include="Assets\Scripts\BulletController.cs" />
     <Compile Include="Assets\Scripts\IndexCameraColliders.cs" />
     <Compile Include="Assets\Scripts\EnemyController.cs" />
     <Compile Include="Assets\Scripts\Item.cs" />
-    <Compile Include="Assets\Scripts\OnMouseOverStart.cs" />
-    <Compile Include="Assets\Scripts\MainMenu.cs" />
+    <Compile Include="Assets\Scripts\MenuGame.cs" />
+    <Compile Include="Assets\Scripts\Managers\HealthManagerPlayer.cs" />
+    <Compile Include="Assets\Scripts\Managers\GoToNewSceneManager.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

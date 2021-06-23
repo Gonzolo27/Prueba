@@ -5,7 +5,8 @@ using UnityEngine;
 public class EnemyController : MonoBehaviour
 {
 
-    private PlayerManager _playerManager;
+    private PlayerManager playerManager;
+    private HealthManagerPlayer healthManagerPlayer;
     public float speed;
     private bool walking = true;
     public Vector3 hitHorizontalForce;
@@ -21,7 +22,8 @@ public class EnemyController : MonoBehaviour
     private const string DAMAGE = "Damage", WALKING = "Walking", ATTACK = "Attack";
     private void Start()
     {
-        _playerManager = FindObjectOfType<PlayerManager>();
+        playerManager = FindObjectOfType<PlayerManager>();
+        healthManagerPlayer = FindObjectOfType<HealthManagerPlayer>();
         animator = GetComponentInChildren<Animator>();
         SetDir();
     }
@@ -37,15 +39,17 @@ public class EnemyController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.transform.tag.Equals("Player") && !_playerManager.collisioned && !_playerManager.hitEnemy && collision.collider.name.Equals("Player"))
+        if (collision.transform.tag.Equals("Player") && !playerManager.collisioned && !playerManager.hitEnemy && collision.collider.name.Equals("Player"))
         {
+            healthManagerPlayer.MakeDamage();
             Vector3 impulse = hitHorizontalForce;
             if (collision.contacts[collision.contacts.Length - 1].normal.x > 0)
             {
                 impulse = -impulse;
             }
-            _playerManager.DoImpulse(impulse);
-            _playerManager.collisioned = true;
+            playerManager.DoImpulse(impulse);
+            playerManager.collisioned = true;
+            StopWalk(true);
         }
     }
 
