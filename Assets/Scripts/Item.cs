@@ -21,6 +21,7 @@ public class Item : MonoBehaviour
     {
         if (collision.gameObject.transform.tag.Equals("Player"))
         {
+            SFXManager.SharedInstance.PlaySFX(SFXManager.SFXType.TAKEITEM);
             itemManager.AddItem(this.value);
             playerManager.ShowUFXPickUpItem(this.transform);
 

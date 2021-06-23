@@ -26,6 +26,7 @@ public class HealthManagerPlayer : MonoBehaviour
         if (currentHealth <= 0)
         {
             //playerManager.RestLife();
+            playerManager.collisioned = false;
             FindObjectOfType<UIManager>().Dead();
         }
     }

@@ -13,13 +13,14 @@ public class PlayerController : MonoBehaviour
 
     private const string AXIS_H = "Horizontal", LAST_H = "WalkingRight", WALKING = "Walking", GROUND = "OnGround";
     private const string JUMP = "Jump", D_JUMP = "DoubleJump", LAST_M = "LastMovement", FALL = "Fall", D_JUMPDID = "DoubleJumpDid";
-    private const string DAMAGE = "Damage";
+    private const string DAMAGE = "Damage", STOP = "Stop";
 
 
     [SerializeField] private float speed = 2.0f;                //Determina la velocidad de movimiento del personaje
     [SerializeField] private bool walking = false;              //Determina si el personaje está en movimiento
     [SerializeField] private float lastMovement = 0.0f;         //Almacena el último valor de movimiento para saber la dirección
     private bool right = true;                                  //Si lastMovement es > 0 el personaje mirará a derecha sino, a izquierda
+    private bool stop;
 
     private float shootPointPosX;
 
@@ -54,15 +55,20 @@ public class PlayerController : MonoBehaviour
             }
             if (Input.GetButtonDown("Jump"))
             {
+                
                 //Primer impulso
                 if (playerManager.ground == true)
                 {
+                    walking = false;
+                    SFXManager.SharedInstance.PlaySFX(SFXManager.SFXType.JUMP);
                     Jump();
                     playerManager.jump = true;
                 }
                 //Segundo impulso
                 else if ((playerManager.jump == true || playerManager.fall == true) && playerManager.doubleJumpDid == false)
                 {
+                    walking = false;
+                    SFXManager.SharedInstance.PlaySFX(SFXManager.SFXType.JUMP);
                     Jump();
                     playerManager.doubleJump = true;
                 }
@@ -71,12 +77,35 @@ public class PlayerController : MonoBehaviour
             {
                 if (itemManager.currentItems > 0)
                 {
+                    SFXManager.SharedInstance.PlaySFX(SFXManager.SFXType.THROW);
                     Debug.Log(shootPoint.transform.position);
                     Instantiate(bullet, shootPoint.transform);
                     itemManager.SubItem();
                 }
             }
         }
+        if (walking && !SFXManager.SharedInstance.IsPlayingSteps())
+        {
+            Debug.Log("Empiezo a sonar");
+            SFXManager.SharedInstance.PlaySFX(SFXManager.SFXType.STEPS);
+        }
+        //else if ((!walking || (playerManager.jump || playerManager.fall)) && SFXManager.SharedInstance.IsPlayingSteps())
+        else if (!playerManager.ground && SFXManager.SharedInstance.IsPlayingSteps())
+        {
+            //Podría hacerse también sabiendo si estoy o no tocando el suelo.
+            Debug.Log("Paro de sonar");
+            SFXManager.SharedInstance.StopSteps();
+        }
+
+    }
+
+    public void DeactivatePlayer()
+    {
+        stop = true;
+        this.transform.GetComponent<Rigidbody2D>().gravityScale = 0;
+        this.transform.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
+        this.transform.GetComponentInChildren<BoxCollider2D>().enabled = false;
+        this.transform.GetComponentInChildren<CircleCollider2D>().enabled = false;
 
     }
 
@@ -145,5 +174,10 @@ public class PlayerController : MonoBehaviour
         _animator.SetBool(FALL, playerManager.fall);
         _animator.SetBool(GROUND, playerManager.ground);
         _animator.SetBool(DAMAGE, playerManager.collisioned);
+        _animator.SetBool(STOP, stop);
+        if (stop == true)
+        {
+            this.enabled = false;
+        }
     }
 }

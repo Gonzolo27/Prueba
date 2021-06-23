@@ -295,6 +295,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   killEnemyUFX: {fileID: 4236981849024081968, guid: 24c82cd1345b2a7488433c5f405bcae2, type: 3}
+  enemyType: 1
   lifes: 2
 --- !u!114 &4564232524546085501
 MonoBehaviour:

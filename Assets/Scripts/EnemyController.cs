@@ -41,6 +41,7 @@ public class EnemyController : MonoBehaviour
     {
         if (collision.transform.tag.Equals("Player") && !playerManager.collisioned && !playerManager.hitEnemy && collision.collider.name.Equals("Player"))
         {
+            SFXManager.SharedInstance.PlaySFX(SFXManager.SFXType.PLAYERHITTED);
             healthManagerPlayer.MakeDamage();
             Vector3 impulse = hitHorizontalForce;
             if (collision.contacts[collision.contacts.Length - 1].normal.x > 0)

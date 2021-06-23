@@ -27,6 +27,7 @@ public class FeetCollision : MonoBehaviour
         }
         if (collision.transform.tag.Equals("Enemy"))
         {
+            SFXManager.SharedInstance.PlaySFX(SFXManager.SFXType.HIT);
             playerManager.DoImpulse(playerManager.hitVerticalForce);
             playerManager.hitEnemy = true;
             collision.gameObject.GetComponent<HealthManager>().GetHit(damage);

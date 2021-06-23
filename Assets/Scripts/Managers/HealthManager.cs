@@ -7,6 +7,8 @@ public class HealthManager : MonoBehaviour
     EnemyController enemyController;
     KillEnemyManager killEnemyManager;
     public GameObject killEnemyUFX;
+    public enum EnemyType { CHICKEN, BEE };
+    public EnemyType enemyType;
 
     public int lifes;
 
@@ -22,6 +24,16 @@ public class HealthManager : MonoBehaviour
         lifes -= damage;
         if (lifes <= 0)
         {
+            switch (enemyType)
+            {
+                case EnemyType.BEE:
+                    SFXManager.SharedInstance.PlaySFX(SFXManager.SFXType.BEEDEAD);
+                    break;
+                case EnemyType.CHICKEN:
+                    SFXManager.SharedInstance.PlaySFX(SFXManager.SFXType.CHICKENDEAD);
+                    break;
+            }
+
             enemyController.killed = true;
             enemyController.StopWalk(false);
             killEnemyManager.KillEnemy(this.transform, killEnemyUFX);

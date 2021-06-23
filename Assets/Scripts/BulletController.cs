@@ -32,6 +32,7 @@ public class BulletController : MonoBehaviour
     {
         if (collision.transform.tag.Equals("Enemy") && !collisioned)
         {
+            SFXManager.SharedInstance.PlaySFX(SFXManager.SFXType.HIT);
             collisioned = true;
             healthManager = collision.gameObject.GetComponent<HealthManager>();
             healthManager.GetHit(damage);

@@ -8,6 +8,7 @@ public class UIManager : MonoBehaviour
     public GameObject pausePanel;
     public GameObject fadeOut;
     public GameObject deadPanel;
+    public GameObject winPanel;
 
     public float timeToFadeOut;
 
@@ -24,30 +25,53 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public void QuitGame()
+    
+
+    private void ActiveFadeOut()
     {
         Time.timeScale = 1;
-        DeactivatePlayer();
+        FindObjectOfType<PlayerController>().DeactivatePlayer();
         fadeOut.SetActive(true);
-        FindObjectOfType<GoToNewSceneManager>().LoadScene(fadeOut.GetComponent<Image>(), 0.01f, timeToFadeOut, "MainMenu");
+    }
+    public void QuitGame()
+    {
+        ActiveFadeOut();
+        GoToNewSceneManager goToNew = FindObjectOfType<GoToNewSceneManager>();
+        if (goToNew != null)
+        {
+            goToNew.LoadScene(fadeOut.GetComponent<Image>(), 0.01f, timeToFadeOut, "MainMenu");
+        }
+    }
+
+    public void Win()
+    {
+        SFXManager.SharedInstance.PlaySFX(SFXManager.SFXType.MUSICWIN);
+        Time.timeScale = 0;
+        FindObjectOfType<PlayerController>().DeactivatePlayer();
+        winPanel.SetActive(true);
     }
 
     public void Dead()
     {
-        DeactivatePlayer();
+        SFXManager.SharedInstance.PlaySFX(SFXManager.SFXType.MUSICDEAD);
+        FindObjectOfType<AudioManager>().audioCanBePlayed = false;
+        FindObjectOfType<PlayerController>().DeactivatePlayer();
         Time.timeScale = 0;
         deadPanel.SetActive(true);
     }
 
-    private void DeactivatePlayer()
+    public void ReloadScene()
     {
-        PlayerController pc = FindObjectOfType<PlayerController>();
-        pc.enabled = false;
-        pc.gameObject.GetComponent<Rigidbody2D>().gravityScale = 0;
-        pc.gameObject.GetComponentInChildren<BoxCollider2D>().enabled = false;
-        pc.gameObject.GetComponentInChildren<CircleCollider2D>().enabled = false;
+        ActiveFadeOut();
+        FindObjectOfType<PlayerController>().DeactivatePlayer();
+        GoToNewSceneManager goToNew = FindObjectOfType<GoToNewSceneManager>();
+        if (goToNew != null)
+        {
+            goToNew.LoadScene(fadeOut.GetComponent<Image>(), 0.01f, timeToFadeOut, "DemoScene");
+        }
     }
 
+    
     // Update is called once per frame
     void Update()
     {

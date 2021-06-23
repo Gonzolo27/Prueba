@@ -62,7 +62,9 @@
     <Compile Include="Assets\Scripts\StartLevel.cs" />
     <Compile Include="Assets\Scripts\Managers\PlayerManager.cs" />
     <Compile Include="Assets\Scripts\EndLevel.cs" />
+    <Compile Include="Assets\Scripts\MenuGame.cs" />
     <Compile Include="Assets\Scripts\BeeAtack.cs" />
+    <Compile Include="Assets\Scripts\Managers\GoToNewSceneManager.cs" />
     <Compile Include="Assets\Scripts\FeetCollision.cs" />
     <Compile Include="Assets\Scripts\Managers\ItemManager.cs" />
     <Compile Include="Assets\Scripts\PlayerController.cs" />
@@ -73,11 +75,12 @@
     <Compile Include="Assets\Scripts\Managers\HealthManager.cs" />
     <Compile Include="Assets\Scripts\BulletController.cs" />
     <Compile Include="Assets\Scripts\IndexCameraColliders.cs" />
+    <Compile Include="Assets\Scripts\Managers\HealthManagerPlayer.cs" />
     <Compile Include="Assets\Scripts\EnemyController.cs" />
     <Compile Include="Assets\Scripts\Item.cs" />
-    <Compile Include="Assets\Scripts\MenuGame.cs" />
-    <Compile Include="Assets\Scripts\Managers\HealthManagerPlayer.cs" />
-    <Compile Include="Assets\Scripts\Managers\GoToNewSceneManager.cs" />
+    <Compile Include="Assets\Scripts\Managers\SFXManager.cs" />
+    <Compile Include="Assets\Scripts\Managers\AudioManager.cs" />
+    <Compile Include="Assets\Scripts\PlayAudioTrack.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

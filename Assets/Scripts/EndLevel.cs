@@ -4,14 +4,28 @@ using UnityEngine;
 
 public class EndLevel : MonoBehaviour
 {
+    public enum tipoFin {Win, Dead};
+    public tipoFin tipo;
+
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.transform.tag.Equals("Player"))
         {
-            //Se acaba el nivel
-
-            //Se bloquean todos los movimientos
-            FindObjectOfType<PlayerController>().enabled = false;
+            switch (tipo)
+            {
+                case tipoFin.Win:
+                    FindObjectOfType<UIManager>().Win();
+                    break;
+                case tipoFin.Dead:
+                    FindObjectOfType<UIManager>().Dead();
+                    break;
+            }
+            /*if (tipo == tipoFin.Win)
+            {
+                FindObjectOfType<UIManager>().Win();
+            }*/
+            
         }
     }
 }

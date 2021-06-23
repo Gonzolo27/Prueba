@@ -17,8 +17,11 @@ public class MainMenu : MonoBehaviour
         //IEnumerator coroutine;
         //timeToFadeOut *= steps;
         fadeOut.SetActive(true);
-        FindObjectOfType<GoToNewSceneManager>().LoadScene(fadeOut.GetComponent<Image>(), 0.01f, timeToFadeOut, "DemoScene");
-
+        GoToNewSceneManager goToNew = FindObjectOfType<GoToNewSceneManager>();
+        if (goToNew != null)
+        {
+            goToNew.LoadScene(fadeOut.GetComponent<Image>(), 0.01f, timeToFadeOut, "DemoScene");
+        }
         //coroutine = FadeOut(m_renderer, steps);
         //StartCoroutine(coroutine);
     }
