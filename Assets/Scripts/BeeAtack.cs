@@ -20,7 +20,7 @@ public class BeeAtack : MonoBehaviour
     }
 
     /// <summary>
-    /// Si el player sale de la zona de ataque, la abeja vuelve a patruyar
+    /// Si el player sale de la zona de ataque y no está ni subiendo ni bajando, la abeja vuelve a patrullar
     /// </summary>
     /// <param name="collision"></param>
     private void OnTriggerExit2D(Collider2D collision)
@@ -29,7 +29,6 @@ public class BeeAtack : MonoBehaviour
         if (collision.transform.tag.Equals("Player") && !enemyController.goDown && !enemyController.goDown)
         {
             enemyController.GetComponentInChildren<Animator>().applyRootMotion = true;
-            //enemyController.attacking = false;
             enemyController.SetWalk();
         }
     }

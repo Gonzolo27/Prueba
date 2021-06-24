@@ -78,7 +78,6 @@ public class EnemyController : MonoBehaviour
             {
                 StopWalk(true);
             }
-            Debug.Log(collision.contacts[collision.contacts.Length - 1]);
             SFXManager.SharedInstance.PlaySFX(SFXManager.SFXType.PLAYERHITTED);
             healthManagerPlayer.MakeDamage(damage);
             Vector3 impulse = hitHorizontalForce;
@@ -138,37 +137,32 @@ public class EnemyController : MonoBehaviour
             Walk();
         }
         
-        if (attacking && healthManager.enemyType.Equals(HealthManager.EnemyType.BEE) && !_goDown && !_goUp)
+        //Primer paso, la abeja capta al player y calcula la distancia a la que está y guarda su posición
+        if (attacking && healthManager.enemyType.Equals(HealthManager.EnemyType.BEE) && !_goDown && !_goUp && healthManager.lifes > 0)
         {
-            Debug.Log("Entro -1");
             startPositionPlayer = playerManager.transform.position;
             startPositionEnemy = transform.position;
-            Debug.Log("Position player = " + startPositionPlayer);
-            Debug.Log("Position enemy = " + startPositionEnemy);
             distance = Vector3.Distance(startPositionEnemy, startPositionPlayer);
-            Debug.Log(distance);
             _goDown = true;
         }
-        if (_goDown && attacking && (distance > 0.01f || !playerHitted) && !_goUp)
+        //Segundo paso, la abeja va a la última posición conocida del player
+        if (_goDown && attacking && (distance > 0.01f || !playerHitted) && !_goUp && healthManager.lifes > 0)
         {
-            Debug.Log("Entro 0");
             transform.position = Vector2.MoveTowards(this.transform.position, startPositionPlayer, 1 * Time.deltaTime);
             distance = Vector3.Distance(this.transform.position, startPositionPlayer);
         }
-        if ((distance < 0.01f || playerHitted) && healthManager.enemyType.Equals(HealthManager.EnemyType.BEE) && attacking && !_goUp)
+        //Tercer paso, cuando llega a la posición (más o menos) o le alcanza, la abeja tiene que empezar a subir
+        if ((distance < 0.01f || playerHitted) && healthManager.enemyType.Equals(HealthManager.EnemyType.BEE) && attacking && !_goUp && healthManager.lifes > 0)
         {
             attacking = false;
-            Debug.Log("Up!!!");
             _goUp = true;
 
             playerHitted = false;
             _goDown = false;
-            //ReturnToPreviousPosition();
         }
-        //else if (_goUp && (distance < 0.01f || playerHitted) && healthManager.enemyType.Equals(HealthManager.EnemyType.BEE) && attacking)
-        if(_goUp)
+        //Cuarto paso, la abeja empieza a subir hasta alcanzar la posición de la que ha partido hacia abajo
+        if(_goUp && healthManager.lifes > 0)
         {
-            Debug.Log("Entro1");
             transform.position = Vector2.MoveTowards(this.transform.position, startPositionEnemy, 0.6f * Time.deltaTime);
             float d = Vector2.Distance(startPositionEnemy, this.transform.position);
             if (d < 0.01f)
@@ -180,21 +174,6 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    /*
-    private void ReturnToPreviousPosition()
-    {
-        Debug.Log("Entro 2");
-        StartCoroutine(ReturnPrevious());
-    }
-
-    private IEnumerator ReturnPrevious()
-    {
-        Debug.Log("Start Position enemy antes del yield = " + startPositionEnemy);
-        Debug.Log("Position enemy antes del yield = " + this.transform.position);
-        yield return transform.position = Vector2.MoveTowards(this.transform.position, startPositionEnemy, 1 * Time.deltaTime);
-        //Debug.Log("Position enemy después del yield = " + this.transform.position);
-        _goUp = false;
-    }*/
 
     private void LateUpdate()
     {
