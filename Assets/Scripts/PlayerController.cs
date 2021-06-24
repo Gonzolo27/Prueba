@@ -78,7 +78,6 @@ public class PlayerController : MonoBehaviour
                 if (itemManager.currentItems > 0)
                 {
                     SFXManager.SharedInstance.PlaySFX(SFXManager.SFXType.THROW);
-                    Debug.Log(shootPoint.transform.position);
                     Instantiate(bullet, shootPoint.transform);
                     itemManager.SubItem();
                 }
@@ -86,19 +85,18 @@ public class PlayerController : MonoBehaviour
         }
         if (walking && !SFXManager.SharedInstance.IsPlayingSteps())
         {
-            Debug.Log("Empiezo a sonar");
             SFXManager.SharedInstance.PlaySFX(SFXManager.SFXType.STEPS);
         }
-        //else if ((!walking || (playerManager.jump || playerManager.fall)) && SFXManager.SharedInstance.IsPlayingSteps())
-        else if (!playerManager.ground && SFXManager.SharedInstance.IsPlayingSteps())
+        else if ((!playerManager.ground || !walking))
         {
-            //Podría hacerse también sabiendo si estoy o no tocando el suelo.
-            Debug.Log("Paro de sonar");
             SFXManager.SharedInstance.StopSteps();
         }
 
     }
 
+    /// <summary>
+    /// Se desactiva al jugador y las fuerzas en él
+    /// </summary>
     public void DeactivatePlayer()
     {
         stop = true;
@@ -109,6 +107,10 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Se mueve el personaje
+    /// </summary>
+    /// <param name="movement">Indica el sentido del movimiento</param>
     private void Walk(float movement)
     {
         Vector3 translation = new Vector3(movement * speed * Time.deltaTime, 0, 0);
@@ -117,6 +119,11 @@ public class PlayerController : MonoBehaviour
         walking = true;
     }
 
+    /// <summary>
+    /// Devuelve 1 o -1 en función de a dónde esté mirando el personaje
+    /// Va en concordancia con mirada hacia eje positivo o eje negativo de x
+    /// </summary>
+    /// <returns></returns>
     public int GetRight()
     {
         int x = -1;
@@ -128,6 +135,9 @@ public class PlayerController : MonoBehaviour
         return x;
     }
 
+    /// <summary>
+    /// Se modifica la velocidad vertical del personaje para que salte
+    /// </summary>
     private void Jump()
     {
         // _rigidbody2D.AddForce(playerManager.jumpForce, ForceMode2D.Impulse);
@@ -151,6 +161,10 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Quizá sería más eficiente hacer el SetBool cuando cambien las variables...
+    /// Pero aquí es seguro que será lo último en ejecutarse
+    /// </summary>
     private void LateUpdate()
     {
         _animator.SetFloat(AXIS_H, Input.GetAxis(AXIS_H));

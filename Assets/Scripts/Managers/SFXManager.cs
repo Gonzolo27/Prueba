@@ -7,7 +7,6 @@ public class SFXManager : MonoBehaviour
     public AudioSource hit, beeDead, chickenDead, musicWin, musicDead, playerHitted, jump, steps, takeItem, _throw;
     public enum SFXType { HIT, BEEDEAD, CHICKENDEAD, MUSICWIN, MUSICDEAD, PLAYERHITTED, JUMP, STEPS, TAKEITEM, THROW};
 
-    // Start is called before the first frame update
     private static SFXManager sharedInstance = null;
 
     public static SFXManager SharedInstance
@@ -30,16 +29,31 @@ public class SFXManager : MonoBehaviour
     }
 
     //Los siguientes 2 métodos no los hago genéricos para agilizar la prueba.
+    /// <summary>
+    /// Devuelve true o false en funicón de si se están reproduciendo o no los pasos.
+    /// </summary>
+    /// <returns></returns>
     public bool IsPlayingSteps()
     {
         return steps.isPlaying;
     }
 
+    /// <summary>
+    /// Se para el sonido de los pasos
+    /// </summary>
     public void StopSteps()
     {
-        steps.Stop();
+        if (steps.isPlaying)
+        {
+            steps.Stop();
+        }
+            
     }
 
+    /// <summary>
+    /// Según el type seleccionado se reproduce un sonido u otro
+    /// </summary>
+    /// <param name="type">Elemento del enumerado</param>
     public void PlaySFX(SFXType type)
     {
         switch (type)

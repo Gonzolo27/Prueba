@@ -4,24 +4,32 @@ using UnityEngine;
 
 public class BeeAtack : MonoBehaviour
 {
+    /// <summary>
+    /// Si el player entra en la zona de ataque, la abeja para de patruyar y ataca con una animación
+    /// </summary>
+    /// <param name="collision"></param>
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.transform.tag.Equals("Player"))
+        EnemyController enemyController = GetComponentInParent<EnemyController>();
+        if (collision.transform.tag.Equals("Player") && !enemyController.goDown && !enemyController.goDown)
         {
-            EnemyController enemyController = GetComponentInParent<EnemyController>();
             enemyController.GetComponentInChildren<Animator>().applyRootMotion = false;
             enemyController.attacking = true;
             enemyController.StopWalk(false);
         }
     }
 
+    /// <summary>
+    /// Si el player sale de la zona de ataque, la abeja vuelve a patruyar
+    /// </summary>
+    /// <param name="collision"></param>
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.transform.tag.Equals("Player"))
+        EnemyController enemyController = GetComponentInParent<EnemyController>();
+        if (collision.transform.tag.Equals("Player") && !enemyController.goDown && !enemyController.goDown)
         {
-            EnemyController enemyController = GetComponentInParent<EnemyController>();
             enemyController.GetComponentInChildren<Animator>().applyRootMotion = true;
-            enemyController.attacking = false;
+            //enemyController.attacking = false;
             enemyController.SetWalk();
         }
     }

@@ -17,6 +17,10 @@ public class Item : MonoBehaviour
         playerManager = FindObjectOfType<PlayerManager>();
     }
 
+    /// <summary>
+    /// Si colisiona con el jugador, se añade a su inventario y se destruye el objeto
+    /// </summary>
+    /// <param name="collision"></param>
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.transform.tag.Equals("Player"))

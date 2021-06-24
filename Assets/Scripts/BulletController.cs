@@ -22,12 +22,20 @@ public class BulletController : MonoBehaviour
         ApplyForce();
     }
 
+    /// <summary>
+    /// Se le aplica una fuerza de lanzamiento
+    /// </summary>
     public void ApplyForce()
     {
         m_NewForce.x = m_NewForce.x * playerController.GetRight();
         rigidBody2D.AddForce(m_NewForce * speed, ForceMode2D.Impulse);
     }
 
+    /// <summary>
+    /// Si el objeto colisona con el enemigo le causa daño
+    /// si toca el suelo simplemente desaparece
+    /// </summary>
+    /// <param name="collision"></param>
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.transform.tag.Equals("Enemy") && !collisioned)

@@ -4,11 +4,14 @@ using UnityEngine;
 
 public class StartLevel : MonoBehaviour
 {
+    /// <summary>
+    /// Cuando empieza el nivel, los enemigos empiezan a moverse y se desactiva este collider
+    /// </summary>
+    /// <param name="collision"></param>
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.transform.tag.Equals("Player"))
         {
-            //Se empiezan a mover los enemigos
             EnemyController[] arrayEnemiesControllers = FindObjectsOfType<EnemyController>();
             foreach (EnemyController controller in arrayEnemiesControllers)
             {

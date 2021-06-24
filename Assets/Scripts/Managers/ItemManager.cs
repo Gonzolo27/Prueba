@@ -8,37 +8,31 @@ public class ItemManager : MonoBehaviour
 {
     private int _currentItems;
     public TMP_Text bulletText;
-    /*
-     * TODO
-     * - Añadir el text mesh pro para el texto del número de frutas
-     */
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
     /// <summary>
     /// Se añaden al valor actual un número determinado de items (nItems)
     /// </summary>
-    /// <param name="nItems"></param>
+    /// <param name="nItems">número de ítems añadidos</param>
     public void AddItem(int nItems)
     {
         _currentItems += nItems;
         SetText();
-        Debug.Log("Total de manzanas: " + _currentItems);
-        //TODO: Modificar el texto.
     }
 
+    /// <summary>
+    /// Cambia el texto del número de items
+    /// </summary>
     private void SetText()
     {
         bulletText.text = "x" + _currentItems.ToString();
     }
+    /// <summary>
+    /// Resta un item al lanzarlo
+    /// </summary>
     public void SubItem()
     {
         _currentItems -= 1;
         SetText();
-        Debug.Log("Total de manzanas: " + _currentItems);
     }
 
     public int currentItems

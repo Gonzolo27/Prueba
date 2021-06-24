@@ -9,6 +9,7 @@ TagManager:
   - Hit
   - PatrolZone
   - Trap
+  - AttackActivate
   layers:
   - Default
   - TransparentFX

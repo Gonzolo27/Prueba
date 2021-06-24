@@ -36,18 +36,23 @@ public class PlayerManager : MonoBehaviour
     /// Instancio el sistema de partículas al recoger un ítem y se destruye al cabo de 1sg.
     /// Si se cambia de sentencia, se instancia donde está el item en lugar de donde esté el jugador.
     /// </summary>
-    /// <param name="positionItem"></param>
+    /// <param name="positionItem">Posición del item que se recoge</param>
     public void ShowUFXPickUpItem(Transform positionItem)
     {
         //Destroy(Instantiate(pickUpItemUFX, positionItem.position, positionItem.rotation), 1.0f);
         Destroy(Instantiate(pickUpItemUFX, gameObject.transform), 1.0f);
     }
 
+    /// <summary>
+    /// Aplica un impulso al personaje en función de la fuerza 
+    /// </summary>
+    /// <param name="force">Fuerza que se aplicará para realizar el impulso</param>
     public void DoImpulse(Vector3 force)
     {
         _rigidbody2D.AddForce(force, ForceMode2D.Impulse);
     }
 
+    //Esto es por un posible... añadir vidas al estilo mariobros
    /* public void RestLife()
     {
         lifes -= 1;

@@ -13,7 +13,8 @@ public class FeetCollision : MonoBehaviour
     }
 
     /// <summary>
-    /// Usando collisions detecto que toco el suelo y reseteo el doble salto
+    /// Usando collisions se detecta que toco el suelo y se resetea el doble salto
+    /// También se comprueba si salta encima de un enemigo para dañarlo o cae en un trampa en la que el personaje sufre daño
     /// </summary>
     /// <param name="collision"></param>
     private void OnCollisionEnter2D(Collision2D collision)
@@ -34,9 +35,11 @@ public class FeetCollision : MonoBehaviour
         }
         if (collision.transform.tag.Equals("Trap"))
         {
-            /*
-             * TODO quitarle vida al personaje
-             */
+            SFXManager.SharedInstance.PlaySFX(SFXManager.SFXType.PLAYERHITTED);
+            int damage = collision.transform.GetComponent<WeaponDamage>().damage;
+            FindObjectOfType<HealthManagerPlayer>().MakeDamage(damage);
+            playerManager.collisioned = true;
+            playerManager.ground = true;
         }
     }
 }

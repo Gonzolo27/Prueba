@@ -166,6 +166,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   killEnemyUFX: {fileID: 4236981849024081968, guid: 24c82cd1345b2a7488433c5f405bcae2, type: 3}
+  enemyType: 0
   lifes: 3
 --- !u!114 &7733542353238446450
 MonoBehaviour:
@@ -183,4 +184,6 @@ MonoBehaviour:
   hitHorizontalForce: {x: 1.5, y: 0, z: 0}
   patrolZone: {fileID: 0}
   killed: 0
+  attacking: 0
+  damage: 1
   startDirection: 0

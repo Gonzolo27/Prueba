@@ -18,6 +18,12 @@ public class HealthManager : MonoBehaviour
         enemyController = GetComponent<EnemyController>();
         killEnemyManager = FindObjectOfType<KillEnemyManager>();
     }
+
+    /// <summary>
+    /// Se le resta vida al enemigo en función del daño
+    /// pudiendo morir si tiene menos de 0 de vida.
+    /// </summary>
+    /// <param name="damage">Daño causado al enemigo</param>
     public void GetHit(int damage)
     {
         enemyController.SetAnimatorDamage(true);
@@ -28,6 +34,7 @@ public class HealthManager : MonoBehaviour
             {
                 case EnemyType.BEE:
                     SFXManager.SharedInstance.PlaySFX(SFXManager.SFXType.BEEDEAD);
+                    this.GetComponentInChildren<CapsuleCollider2D>().enabled = false;
                     break;
                 case EnemyType.CHICKEN:
                     SFXManager.SharedInstance.PlaySFX(SFXManager.SFXType.CHICKENDEAD);
@@ -38,7 +45,7 @@ public class HealthManager : MonoBehaviour
             enemyController.StopWalk(false);
             killEnemyManager.KillEnemy(this.transform, killEnemyUFX);
             coroutine = DestroyAfterTime(1f);
-            this.GetComponent<BoxCollider2D>().enabled = false;
+            this.GetComponentInChildren<BoxCollider2D>().enabled = false;
             StartCoroutine(coroutine);
             
         }
@@ -49,21 +56,23 @@ public class HealthManager : MonoBehaviour
             
     }
 
+    /// <summary>
+    /// Hace que cambie la animación
+    /// </summary>
+    private void RemoveHit()
+    {
+        enemyController.SetAnimatorDamage(false);
+    }
+
+    /// <summary>
+    /// Se destruye el enemigo y su zona de patruya tras un periodo de tiempo
+    /// </summary>
+    /// <param name="time">tiempo de espera para destruir al enemigo</param>
+    /// <returns></returns>
     IEnumerator DestroyAfterTime(float time)
     {
         yield return new WaitForSeconds(time);
         Destroy(enemyController.patrolZone.gameObject);
         Destroy(this.gameObject);
-    }
-
-    public void RemoveHit()
-    {
-        enemyController.SetAnimatorDamage(false);
-    }
-
-    public void ShowUFXKilled(Transform positionItem)
-    {
-        //Destroy(Instantiate(pickUpItemUFX, positionItem.position, positionItem.rotation), 1.0f);
-        Destroy(Instantiate(killEnemyUFX, gameObject.transform), 1.0f);
     }
 }

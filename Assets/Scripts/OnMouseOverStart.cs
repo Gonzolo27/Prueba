@@ -16,16 +16,17 @@ public class OnMouseOverStart : MonoBehaviour
         m_OriginalColor = text.color;
     }
 
+    /// <summary>
+    /// Modifica el color de los botones del menú principal al posicionarse el cursor en él
+    /// </summary>
     public void PointerEnter()
     {
         text.color = m_MouseOverColor;
     }
 
-   /* public void OnPointerEnter(PointerEventData pointerEventData)
-    {
-        text.color = m_MouseOverColor;
-    }*/
-
+    /// <summary>
+    /// Modifica el color de los botones del menú principal al salir el cursor de él
+    /// </summary>
     public void PointerExit()
     {
         text.color = m_OriginalColor;

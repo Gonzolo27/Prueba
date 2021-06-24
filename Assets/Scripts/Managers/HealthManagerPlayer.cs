@@ -10,6 +10,7 @@ public class HealthManagerPlayer : MonoBehaviour
     private int currentHealth;
     public Slider sliderHealth;
 
+
     private PlayerManager playerManager;
     
 
@@ -19,13 +20,16 @@ public class HealthManagerPlayer : MonoBehaviour
         playerManager = FindObjectOfType<PlayerManager>();
     }
 
-    public void MakeDamage()
+    /// <summary>
+    /// Se le quita vida al personaje y se comprueba si tiene menos de 0 de vida
+    /// </summary>
+    /// <param name="damage">daño causado al personaje</param>
+    public void MakeDamage(int damage)
     {
-        currentHealth -= 1;
-        sliderHealth.value -= 1;
+        currentHealth -= damage;
+        sliderHealth.value -= damage;
         if (currentHealth <= 0)
         {
-            //playerManager.RestLife();
             playerManager.collisioned = false;
             FindObjectOfType<UIManager>().Dead();
         }

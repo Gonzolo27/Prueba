@@ -5,6 +5,11 @@ using UnityEngine;
 public class ChangeDirection : MonoBehaviour
 {
     public GameObject enemy;
+
+    /// <summary>
+    /// Cuando el enemigo sale de su zona se le cambia la dirección
+    /// </summary>
+    /// <param name="collision"></param>
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (enemy != null)
